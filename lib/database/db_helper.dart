@@ -26,31 +26,32 @@ class DBHelper {
   }
 
   Future _onCreate(Database db, int version) async {
-    await db.execute(
-      '''
+    await db.execute('''
       CREATE TABLE cities (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT
       )
-      '''
-    );
+      ''');
   }
 
-  Future<int> insertCity(String name) async {
+  Future<int> creat(String name) async {
     final db = await database;
     return await db!.insert('cities', {'name': name});
   }
 
-  Future<List<Map<String, dynamic>>> getCities() async {
+  Future<List<Map<String, dynamic>>> read() async {
     final db = await database;
     return await db!.query('cities');
   }
-  Future<int> deleteCity(int id) async {
+
+  Future<int> update(int id, String name) async {
+    final db = await database;
+    return await db!
+        .update('cities', {'name': name}, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> delete(int id) async {
     final db = await database;
     return await db!.delete('cities', where: 'id = ?', whereArgs: [id]);
-  }
-  Future<int> updateCity(int id, String name) async {
-    final db = await database;
-    return await db!.update('cities', {'name': name}, where: 'id = ?', whereArgs: [id]);
   }
 }

@@ -24,9 +24,9 @@ class _CityFormState extends State<CityForm> {
   void _saveCity() async {
     if (_formKey.currentState!.validate()) {
       if (widget.cityId == null) {
-        await DBHelper().insertCity(_controller.text);
+        await DBHelper().creat(_controller.text);
       } else {
-        await DBHelper().updateCity(widget.cityId!, _controller.text);
+        await DBHelper().update(widget.cityId!, _controller.text);
       }
       Navigator.of(context).pop();
     }

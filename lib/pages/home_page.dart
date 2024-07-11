@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _cityList = DBHelper().getCities();
+    _cityList = DBHelper().read();
   }
 
   Future<Map<String, dynamic>> getData(String place) async {
@@ -32,9 +32,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void deleteCity(int id) async {
-    await DBHelper().deleteCity(id);
+    await DBHelper().delete(id);
     setState(() {
-      _cityList = DBHelper().getCities();
+      _cityList = DBHelper().read();
     });
   }
 
@@ -87,9 +87,9 @@ class _HomePageState extends State<HomePage> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                DBHelper().updateCity(cityId, _controller.text);
+                DBHelper().update(cityId, _controller.text);
                 setState(() {
-                  _cityList = DBHelper().getCities();
+                  _cityList = DBHelper().read();
                 });
               },
               child: Text('Save'),
@@ -257,7 +257,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => CityForm()),
           ).then((_) {
             setState(() {
-              _cityList = DBHelper().getCities();
+              _cityList = DBHelper().read();
             });
           });
         },
